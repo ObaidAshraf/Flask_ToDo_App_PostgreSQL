@@ -100,6 +100,7 @@ class basicUnitTest(unittest.TestCase):
         self.app = app.test_client()
         response = self.delete_task('')
         self.assertEqual(response.status_code, 404)
-
+        response = self.delete_task(550)
+        self.assertEqual(response.status_code, 500)
 
 unittest.main()

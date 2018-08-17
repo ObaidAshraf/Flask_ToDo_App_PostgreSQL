@@ -66,6 +66,9 @@ def update_task(task_id):
 
 @app.route("/todo/api/v1.0/tasks/<int:task_id>", methods = ['DELETE'])
 def delete_task(task_id):
+    task_row = dbc.get_task(task_id)[0]
+    if not task_id or task_row <= 0:
+        abort(500)
     data = {}
     dbc.delete_task(task_id)
     return ("Task with ID " + str(task_id) + " is successfully deleted.")
@@ -76,7 +79,7 @@ def not_found_error(e):
 
 @app.errorhandler(500)
 def not_found_error(e):
-    return "Task not found", 500
+    return "Insufficient resources to complete the task", 500
 
 if __name__ == '__main__':
     app.run(debug = True, port = 8080)
